@@ -65,7 +65,7 @@ const Login = () => {
   return (
     <>
       <Head>
-        <title>Address Advisors | Login</title>
+        <title>Hair app | Login</title>
       </Head>
       <Box
         component="main"

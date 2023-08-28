@@ -14,7 +14,7 @@ export const registerUser = async (data, onSuccess, onFailure) => {
       onFailure(res.data);
     }
   } catch (error) {
-    onFailure(error.response.data);
+    onFailure(error.response);
   }
 };
 
@@ -31,6 +31,6 @@ export const authCheck = async (token, onSuccess, onFailure) => {
       onFailure(res.data);
     }
   } catch (error) {
-    onFailure(error.response.data);
+    onFailure(error.response);
   }
 };

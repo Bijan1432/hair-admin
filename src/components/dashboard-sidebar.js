@@ -101,12 +101,12 @@ export const DashboardSidebar = (props) => {
         }}
       >
         <div>
-          <Box sx={{ p: 3 }}>
-            <NextLink href="/" passHref>
-              <Image src={Logo} />
-            </NextLink>
-          </Box>
-          <Box sx={{ px: 2 }}>
+          {/* <Box sx={{ p: 3 }}> */}
+          {/* <NextLink href="/" passHref> */}
+          {/* <Image src={Logo} /> */}
+          {/* </NextLink> */}
+          {/* </Box> */}
+          <Box sx={{ px: 2, p: 3 }}>
             <Box
               sx={{
                 alignItems: "center",
@@ -121,18 +121,18 @@ export const DashboardSidebar = (props) => {
             >
               <div>
                 <Typography color="inherit" variant="subtitle1">
-                  Golden Machinery
+                  Hair App
                 </Typography>
                 <Typography color="neutral.400" variant="body2">
                   Your Admin Panel
                 </Typography>
               </div>
-              <PrecisionManufacturingIcon
+              {/* <PrecisionManufacturingIcon
                 fontSize="large"
                 sx={{
                   color: "gold",
                 }}
-              />
+              /> */}
             </Box>
           </Box>
         </div>
