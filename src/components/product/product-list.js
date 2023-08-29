@@ -23,13 +23,24 @@ export const Productlist = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Product Name", width: 300 },
-    { field: "slug", headerName: "Slug", width: 130 },
+    { field: "name", headerName: "Product Name", width: 200 },
     { field: "status", headerName: "Status", width: 130 },
     {
-      field: "description",
-      headerName: "Description",
-      width: 190,
+      field: "images",
+      headerName: "Image",
+      width: 400,
+      renderCell: ({ row }) => (
+        <>
+          {row.images.map((r, i) => (
+            <>
+              <span>
+                {r.filename}
+              </span>
+              <br />
+            </>
+          ))}
+        </>
+      ),
     },
     {
       field: "action",
@@ -60,6 +71,7 @@ export const Productlist = () => {
     getProducts(
       [],
       (r) => {
+        console.log("r=>>1", r);
         setProduct(r);
       },
       (err) => {
@@ -73,7 +85,7 @@ export const Productlist = () => {
 
   const EditHandler = (row) => {
     console.log(row);
-    router.push("/edit-product/" + row.product_id);
+    router.push("/edit-hair/" + row.product_id);
   };
   return (
     <Card>
@@ -86,7 +98,7 @@ export const Productlist = () => {
           height: 10,
         }}
       />
-      <CustomTable rows={product} columns={columns} />
+      <CustomTable rows={product} columns={columns} rowHeight={60} />
     </Card>
   );
 };

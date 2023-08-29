@@ -156,6 +156,7 @@ export const Hair = (props) => {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 2000,
           });
+          setValues([])
           console.log(r);
           // router.push("/product-list");
         },
