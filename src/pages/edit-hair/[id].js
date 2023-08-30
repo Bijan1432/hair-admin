@@ -94,7 +94,7 @@ const EditHair = (props) => {
     const updatedSections = [...sections];
     if (event.target.type === "file") {
       const formData = new FormData();
-      formData.append("images", event.target.files[0]);
+      formData.append("images", event?.target?.files[0]);
       updatedSections[index].image = formData;
 
       setFiles([...files, event.target.files[0]]);
@@ -108,7 +108,7 @@ const EditHair = (props) => {
   };
   const removeSection = (index, event) => {
     console.log("index=>", event.id);
-    setImagesToRemove([...imagesToRemove,event.id]);
+    setImagesToRemove([...imagesToRemove, event.id]);
     const updatedSections = [...sections];
     updatedSections.splice(index, 1);
     setSections(updatedSections);
@@ -295,7 +295,7 @@ const EditHair = (props) => {
                       // value={values.sin}
                       // variant="outlined"
                       key={section.id}
-                      helperText={section.image}
+                      helperText={typeof section?.image === "object" ? "" : section?.image}
                     />
                   </Grid>
                   <Grid item md={2} xs={12}>
