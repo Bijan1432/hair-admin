@@ -51,6 +51,9 @@ const EditHair = (props) => {
   const [hairCat, setHairCat] = useState([]);
   const [imageUp, setImageUp] = useState([]);
   const [colour, setcolour] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [imagesToRemove, setImagesToRemove] = useState([]);
+
   useEffect(() => {
     console.log(id, "hair edit");
     getHair(
@@ -61,12 +64,18 @@ const EditHair = (props) => {
           hairName: r.name,
           status: r.status,
           images: r.images,
-          id:id
+          id: id,
         });
         setcolour(r.images);
-        r.images.map((e) => {
-          setSections([...sections, { varientColour: e.colour, image: e.filename, id: e._id }]);
-        });
+
+        setSections((prevSections) => [
+          ...prevSections,
+          ...r.images.map((e) => ({
+            varientColour: e.colour,
+            image: e.filename,
+            id: e._id,
+          })),
+        ]);
       },
       (err) => {
         toast.error(err, {
@@ -76,7 +85,7 @@ const EditHair = (props) => {
       }
     );
   }, []);
-  const [sections, setSections] = useState([{ varientColour: "", image: null }]);
+  const [sections, setSections] = useState([]);
   const addSection = () => {
     setSections([...sections, { varientColour: "", image: null }]);
   };
@@ -84,7 +93,10 @@ const EditHair = (props) => {
   const handleChange2 = (index, event) => {
     const updatedSections = [...sections];
     if (event.target.type === "file") {
-      updatedSections[index].image = event.target.files[0];
+      const formData = new FormData();
+      formData.append("images", event.target.files[0]);
+      updatedSections[index].image = formData;
+
       setFiles([...files, event.target.files[0]]);
     } else {
       updatedSections[index].varientColour = event.target.value;
@@ -94,11 +106,14 @@ const EditHair = (props) => {
     }
     setSections(updatedSections);
   };
-  const removeSection = (index) => {
+  const removeSection = (index, event) => {
+    console.log("index=>", event.id);
+    setImagesToRemove([...imagesToRemove,event.id]);
     const updatedSections = [...sections];
     updatedSections.splice(index, 1);
     setSections(updatedSections);
   };
+
   const handleChange = (event) => {
     if (event.target.name === "image") {
       // console.log(event.target.files[0], "image")
@@ -129,12 +144,18 @@ const EditHair = (props) => {
   const onClickSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("image", imageUp);
-    console.log("colour", colour);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("images", files[i]);
+    }
+    console.log("colour1", colour);
+    console.log("colour2", formData);
+    console.log("colour3", values);
+    console.log("colour4", imagesToRemove);
+
     editHair(
-      formData,
       values,
-      colour,
+      sections,
+      imagesToRemove,
       (r) => {
         toast.success(r, {
           position: toast.POSITION.TOP_CENTER,
@@ -242,7 +263,7 @@ const EditHair = (props) => {
             </Grid>
 
             {sections.map((section, index) => {
-              console.log("section=>", section);
+              console.log("section=>", sections);
               return (
                 <>
                   <Grid item md={4} xs={12} key={section.id}>
@@ -274,13 +295,14 @@ const EditHair = (props) => {
                       // value={values.sin}
                       // variant="outlined"
                       key={section.id}
+                      helperText={section.image}
                     />
                   </Grid>
                   <Grid item md={2} xs={12}>
                     <Button
                       variant="outlined"
                       color="secondary"
-                      onClick={() => removeSection(index)}
+                      onClick={(event) => removeSection(index, section)}
                     >
                       Remove Section
                     </Button>

@@ -65,6 +65,7 @@ export const getProducts = async (slug, onSuccess, onFailure) => {
           name: r.name,
           images:r.images,
           status: r.status,
+          product_id:r._id
         });
       });
       onSuccess(data);

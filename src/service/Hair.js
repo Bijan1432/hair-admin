@@ -70,13 +70,30 @@ export const getHairAll = async (onSuccess, onFailure) => {
   }
 };
 //edit Hair
-export const editHair = async (image, data, colour, onSuccess, onFailure) => {
+export const editHair = async (data, colour,imagesToRemove, onSuccess, onFailure) => {
   try {
-    // console.log("reched32");
+    // console.log("typeOf==>", colour);
+    const images = [];
+    await Promise.all(
+      colour.map(async (r, i) => {
+        if (typeof r.image === "object") {
+          const result = await webApi.post("/uploads/image", r.image);
+          console.log(result, "result===");
+          images.push({
+            url: result.data[0].filePath,
+            filename: result.data[0].fileName,
+            colour: r.varientColour,
+          });
+        }
+      })
+    );
+
+    console.log("images===>>", images);
     // await webApi.post("/uploads/image", image)
     // .then(async (result) => {
     //   console.log(result, "result===");
     // });
+
     // const images = [];
     // await Promise.all(
     //   colour.map(async (_, index) => {
@@ -93,8 +110,9 @@ export const editHair = async (image, data, colour, onSuccess, onFailure) => {
 
     const res = await webApi.post(`/edit-hair/${data.id}`, {
       name: data.hairName,
-      // images: images,
+      images: images,
       status: data.status,
+      imagesToRemove:imagesToRemove,
     });
     console.log("reched2", res);
 
