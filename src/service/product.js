@@ -54,17 +54,18 @@ export const uploadImages = async (image, onSuccess, onFailure) => {
 
 export const getProducts = async (slug, onSuccess, onFailure) => {
   try {
-    const result = await webApi.post("get/product/all", { slug: slug });
+    const result = await webApi.get("/get-all-hair", { slug: slug });
+    // console.log("r=>>2",result?.data?.data?.hair);
+    const hair = result?.data?.data?.hair
     if (result.status === 200) {
       let data = [];
-      result.data.map((r, i) => {
+      hair.map((r, i) => {
         data.push({
           id: i + 1,
           name: r.name,
-          description: r.description,
-          slug: r.slug,
-          product_id: r.product_id,
+          images:r.images,
           status: r.status,
+          product_id:r._id
         });
       });
       onSuccess(data);

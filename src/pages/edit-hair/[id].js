@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { FileOpen } from "@mui/icons-material";
-import { editHairAll, getHair, postHair, uploadImages } from "../../service/Hair";
+import { editHair, editHairAll, getHair, postHair, uploadImages } from "../../service/Hair";
 import { ToastContainer, toast } from "react-toastify";
 import { makeStyles } from "@mui/styles";
 import { useRouter } from "next/router";
@@ -44,12 +44,15 @@ const EditHair = (props) => {
   const Richtext = useMemo(() => dynamic(() => import("react-quill"), { ssr: false }), []);
   const classes = useStyles();
   const [values, setValues] = useState({
-    name: "",
+    hairName: "",
     status: "",
     images: "",
   });
   const [hairCat, setHairCat] = useState([]);
   const [imageUp, setImageUp] = useState([]);
+  const [colour, setcolour] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [imagesToRemove, setImagesToRemove] = useState([]);
 
   useEffect(() => {
     console.log(id, "hair edit");
@@ -58,13 +61,21 @@ const EditHair = (props) => {
       (r) => {
         console.log(r, "hair edit");
         setValues({
-          name: r.name,
+          hairName: r.name,
           status: r.status,
           images: r.images,
+          id: id,
         });
-        r.images.map((e) => {
-          setSections([...sections, { varientColour: e.colour, image: e.filename }]);
-        });
+        setcolour(r.images);
+
+        setSections((prevSections) => [
+          ...prevSections,
+          ...r.images.map((e) => ({
+            varientColour: e.colour,
+            image: e.filename,
+            id: e._id,
+          })),
+        ]);
       },
       (err) => {
         toast.error(err, {
@@ -74,7 +85,7 @@ const EditHair = (props) => {
       }
     );
   }, []);
-  const [sections, setSections] = useState([{ varientColour: "", image: null }]);
+  const [sections, setSections] = useState([]);
   const addSection = () => {
     setSections([...sections, { varientColour: "", image: null }]);
   };
@@ -82,42 +93,41 @@ const EditHair = (props) => {
   const handleChange2 = (index, event) => {
     const updatedSections = [...sections];
     if (event.target.type === "file") {
-      updatedSections[index].image = event.target.files[0];
+      const formData = new FormData();
+      formData.append("images", event?.target?.files[0]);
+      updatedSections[index].image = formData;
+
       setFiles([...files, event.target.files[0]]);
     } else {
       updatedSections[index].varientColour = event.target.value;
-      let colours = colour;
+      let colours = colour ? colour : [];
       colours[index] = event.target.value;
       setcolour([...colours]);
     }
     setSections(updatedSections);
   };
-  const removeSection = (index) => {
+  const removeSection = (index, event) => {
+    console.log("index=>", event.id);
+    setImagesToRemove([...imagesToRemove, event.id]);
     const updatedSections = [...sections];
     updatedSections.splice(index, 1);
     setSections(updatedSections);
   };
+
   const handleChange = (event) => {
     if (event.target.name === "image") {
-      // console.log(event.target.files[0].type)
-      if (
-        event.target.files[0].type === "image/jpeg" ||
-        event.target.files[0].type === "image/jpg" ||
-        event.target.files[0].type === "image/png"
-      ) {
-        setImageUp(event.target.files[0]);
-      } else {
-        toast.error("Please!! Select JPG or JPEG or PNG File", {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 2000,
-        });
-      }
-    } else if (event.target.name === "category") {
-      setValues({
-        ...values,
-        [`${event.target.name}_id`]: Number(event.target.value),
-        [event.target.name]: event.target[event.target.selectedIndex].text,
-      });
+      // console.log(event.target.files[0], "image")
+      // if (
+      //   event.target.files[0].type === "image/jpeg" ||
+      //   event.target.files[0].type === "image/jpg" ||
+      //   event.target.files[0].type === "image/png"
+      // ) {
+      //   setFiles([...files, event.target.files]);
+      //   updatedSections[index].image = event.target.files[0];
+      //   console.log(event.target.files);
+      //   setImageUp(event.target.files);
+      // } else {
+      // }
     } else {
       setValues({
         ...values,
@@ -134,12 +144,18 @@ const EditHair = (props) => {
   const onClickSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("image", imageUp);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("images", files[i]);
+    }
+    console.log("colour1", colour);
+    console.log("colour2", formData);
+    console.log("colour3", values);
+    console.log("colour4", imagesToRemove);
 
     editHair(
-      formData,
       values,
-      token,
+      sections,
+      imagesToRemove,
       (r) => {
         toast.success(r, {
           position: toast.POSITION.TOP_CENTER,
@@ -202,7 +218,7 @@ const EditHair = (props) => {
                 name="hairName"
                 onChange={handleChange}
                 required
-                value={values.name}
+                value={values.hairName}
                 variant="outlined"
               />
               {error.hairName ? (
@@ -247,9 +263,10 @@ const EditHair = (props) => {
             </Grid>
 
             {sections.map((section, index) => {
+              console.log("section=>", sections);
               return (
                 <>
-                  <Grid item md={4} xs={12}>
+                  <Grid item md={4} xs={12} key={section.id}>
                     <TextField
                       fullWidth
                       label="Verient Colour"
@@ -258,6 +275,7 @@ const EditHair = (props) => {
                       // required
                       value={section.varientColour}
                       variant="outlined"
+                      key={section.id}
                     />
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -276,13 +294,15 @@ const EditHair = (props) => {
                       // SelectProps={{ native: true }}
                       // value={values.sin}
                       // variant="outlined"
+                      key={section.id}
+                      helperText={typeof section?.image === "object" ? "" : section?.image}
                     />
                   </Grid>
                   <Grid item md={2} xs={12}>
                     <Button
                       variant="outlined"
                       color="secondary"
-                      onClick={() => removeSection(index)}
+                      onClick={(event) => removeSection(index, section)}
                     >
                       Remove Section
                     </Button>
