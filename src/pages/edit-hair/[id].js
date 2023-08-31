@@ -268,6 +268,7 @@ const EditHair = (props) => {
                 <>
                   <Grid item md={4} xs={12} key={section.id}>
                     <TextField
+                      type="color"
                       fullWidth
                       label="Verient Colour"
                       name="varientColour"

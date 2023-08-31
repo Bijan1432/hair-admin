@@ -33,6 +33,7 @@
     "ckeditor": "^4.12.1",
     "date-fns": "2.29.3",
     "formik": "2.2.9",
+    "material-ui-color": "^1.2.0",
     "moment": "^2.29.4",
     "next": "12.3.0",
     "nprogress": "0.2.0",

@@ -20,6 +20,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { ColorPicker, ColorBox } from "material-ui-color";
+
 // import Autocomplete from "@mui/material/Autocomplete";
 
 import Modal from "@mui/material/Modal";
@@ -67,13 +69,17 @@ export const Hair = (props) => {
     status: false,
     data: false,
   });
+  const [color, setColor] = useState("");
+
   const [openModel, setOpenModel] = useState(false);
   const [features, setFeatures] = useState([]);
   const [sections, setSections] = useState([{ varientColour: "", image: null }]);
   const addSection = () => {
     setSections([...sections, { varientColour: "", image: null }]);
   };
-
+  const handleColorChange = (...args) => {
+    console.log(args);
+  };
   const handleChange2 = (index, event) => {
     const updatedSections = [...sections];
     if (event.target.type === "file") {
@@ -156,7 +162,7 @@ export const Hair = (props) => {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 2000,
           });
-          setValues([])
+          setValues([]);
           console.log(r);
           // router.push("/product-list");
         },
@@ -286,6 +292,7 @@ export const Hair = (props) => {
                     <Grid item md={4} xs={12}>
                       <TextField
                         fullWidth
+                        type="color"
                         label="Verient Colour"
                         name="varientColour"
                         onChange={(event) => handleChange2(index, event)}
@@ -293,7 +300,9 @@ export const Hair = (props) => {
                         value={section.varientColour}
                         variant="outlined"
                       />
+                      {/* <ColorPicker classes={classes} /> */}
                     </Grid>
+
                     <Grid item md={6} xs={12}>
                       <TextField
                         fullWidth
