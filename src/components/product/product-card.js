@@ -20,7 +20,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { ColorPicker, ColorBox } from "material-ui-color";
+// import { ColorPicker, ColorBox } from "material-ui-color";
 
 // import Autocomplete from "@mui/material/Autocomplete";
 
@@ -77,9 +77,7 @@ export const Hair = (props) => {
   const addSection = () => {
     setSections([...sections, { varientColour: "", image: null }]);
   };
-  const handleColorChange = (...args) => {
-    console.log(args);
-  };
+
   const handleChange2 = (index, event) => {
     const updatedSections = [...sections];
     if (event.target.type === "file") {
