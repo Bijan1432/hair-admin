@@ -31,7 +31,7 @@ const App = (props) => {
       },
       (err) => {
         // console.log(console.log("localStorage.getItem=>ee", err));
-        if (router.pathname != "/login") {
+        if (router.pathname != "/login" && router.pathname != "/register") {
           toast.error("Please!! Login To Continue", {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 2000,
