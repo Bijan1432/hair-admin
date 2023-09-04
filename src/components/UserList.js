@@ -16,7 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import CustomTable from "./Table/Table";
-import { getUserList, updateuser, deleteuser } from "./../service/user";
+import { getUserList, updateuser, deleteuser, searchUser } from "./../service/user";
 import { ToastContainer, toast } from "react-toastify";
 //icone
 import EditIcon from "@mui/icons-material/Edit";
@@ -25,6 +25,7 @@ import { useRouter } from "next/router";
 export const Userlist = () => {
   const router = useRouter();
   const [user, setUser] = useState([]);
+  const [values, setValues] = useState([]);
 
   useEffect(() => {
     getUserList(
@@ -207,22 +208,106 @@ export const Userlist = () => {
     },
   ];
 
-  const EditHandler = (row) => {
-    // console.log(row);
-    // router.push("/edit-user/" + row.user_id);
-  };
+
+  const handleChangeSearch = (event)=>{
+    if(event.target.value.length >=2){
+      console.log(event.target.value);
+      searchUser(
+        event.target.value,
+        (r)=>{
+          console.log("user=>", r);
+          setUser(r)
+        },
+        (err)=>{
+          console.log(err);
+        }
+      )
+    }else{
+      getUserList(
+        (r) => {
+          setUser(r);
+          // console.log("users", r);
+        },
+        (err) => {
+          toast.error(err, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+          });
+        }
+      );
+    }
+  }
   return (
-    <Card>
-      <CardHeader
-        // subheader="The information can be edited"
-        title="All Category"
-        style={{
-          background: "#2e5cb8",
-          color: "white",
-          height: 10,
-        }}
-      />
-      <CustomTable rows={user} columns={columns} />
-    </Card>
+    <>
+      <form
+        autoComplete="off"
+        noValidate
+        // onSubmit={onClickSubmit}
+        // {...props}
+        style={{marginBottom:15}}
+      >
+        <Card>
+          <CardHeader
+            // subheader="The information can be edited"
+            title="User Search"
+            style={{
+              background: "#2e5cb8",
+              color: "white",
+              height: 10,
+            }}
+          />
+
+          <CardContent >
+            <Grid container spacing={3}>
+              <Grid item md={12} xs={12}>
+                <TextField
+                  fullWidth
+                  // helperText="Hair Name"
+                  label="Name"
+                  name="name"
+                  onChange={handleChangeSearch}
+                  required
+                  // value={values.hairName}
+                  variant="outlined"
+                />
+                {/* {error.hairName ? (
+                  <span style={{ color: "red", fontSize: "10pt" }}>*Hair Name is required</span>
+                ) : (
+                  ""
+                )} */}
+              </Grid>
+            </Grid>
+          </CardContent>
+          <Divider />
+
+          {/* <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              p: 2,
+            }}
+          >
+            <Button color="error" variant="contained" >
+              Clear
+            </Button>
+            <Button color="primary" variant="contained" type="submit">
+              Save Hair
+            </Button>
+          </Box> */}
+        </Card>
+      </form>
+      <Card>
+        <CardHeader
+          // subheader="The information can be edited"
+          title="User List"
+          style={{
+            background: "#2e5cb8",
+            color: "white",
+            height: 10,
+          }}
+        />
+        <CustomTable rows={user} columns={columns} />
+      </Card>
+    </>
   );
 };

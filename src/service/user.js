@@ -54,3 +54,31 @@ export const deleteuser = async (id, onSuccess, onFailure) => {
     onFailure(error);
   }
 };
+
+export const searchUser = async (name,onSuccess, onFailure) => {
+  try {
+    const res = await webApi.post("/search/users",{
+      name:name
+    });
+    let data = [];
+    
+    if (res.data.data.users.length > 0) {
+      res.data.data.users.map((r, i) => {
+        data.push({
+          id: i + 1,
+          _id: r._id,
+          name: r.name,
+          email: r.email,
+          dob: r.dob,
+          gender: r.gender,
+          status: r.status,
+        });
+      });
+      onSuccess(data);
+    } else {
+      onFailure("No Record Found!!");
+    }
+  } catch (error) {
+    onFailure(error);
+  }
+};

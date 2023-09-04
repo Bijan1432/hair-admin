@@ -4,7 +4,7 @@ export const registerUser = async (data, onSuccess, onFailure) => {
   console.log("datadata=>", data);
   try {
     const res = await webApi.post("/register", {
-      name: data.firstName + " " + data.password,
+      name: data.firstName + " " + data.lastName,
       email: data.email,
       password: data.password,
     });
