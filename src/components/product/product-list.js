@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 
 import CustomTable from "../Table/Table";
-import { getProducts } from "../../service/product";
+import { getProducts, searchHair } from "../../service/product";
 import { ToastContainer, toast } from "react-toastify";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRouter } from "next/router";
@@ -31,11 +31,9 @@ export const Productlist = () => {
       width: 400,
       renderCell: ({ row }) => (
         <>
-          {row.images.map((r, i) => (
+          {row?.images?.map((r, i) => (
             <>
-              <span>
-                {r.filename}
-              </span>
+              <span>{r.filename}</span>
               <br />
             </>
           ))}
@@ -87,18 +85,106 @@ export const Productlist = () => {
     console.log(row);
     router.push("/edit-hair/" + row.product_id);
   };
+
+  const handleChangeSearch = (event) => {
+    if (event.target.value.length >= 2) {
+      console.log(event.target.value);
+      searchHair(
+        event.target.value,
+        (r) => {
+          setProduct(r);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    } else {
+      getProducts(
+        [],
+        (r) => {
+          // console.log("r=>>13", r);
+          setProduct(r);
+        },
+        (err) => {
+          toast.error(err, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 2000,
+          });
+        }
+      );
+    }
+  };
   return (
-    <Card>
-      <CardHeader
-        // subheader="The information can be edited"
-        title="Product List"
-        style={{
-          background: "#2e5cb8",
-          color: "white",
-          height: 10,
-        }}
-      />
-      <CustomTable rows={product} columns={columns} rowHeight={60} />
-    </Card>
+    <>
+      <form
+        autoComplete="off"
+        noValidate
+        // onSubmit={onClickSubmit}
+        // {...props}
+        style={{ marginBottom: 15 }}
+      >
+        <Card>
+          <CardHeader
+            // subheader="The information can be edited"
+            title="User Search"
+            style={{
+              background: "#2e5cb8",
+              color: "white",
+              height: 10,
+            }}
+          />
+
+          <CardContent>
+            <Grid container spacing={3}>
+              <Grid item md={12} xs={12}>
+                <TextField
+                  fullWidth
+                  // helperText="Hair Name"
+                  label="Name"
+                  name="name"
+                  onChange={handleChangeSearch}
+                  required
+                  // value={values.hairName}
+                  variant="outlined"
+                />
+                {/* {error.hairName ? (
+                  <span style={{ color: "red", fontSize: "10pt" }}>*Hair Name is required</span>
+                ) : (
+                  ""
+                )} */}
+              </Grid>
+            </Grid>
+          </CardContent>
+          <Divider />
+
+          {/* <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              p: 2,
+            }}
+          >
+            <Button color="error" variant="contained" >
+              Clear
+            </Button>
+            <Button color="primary" variant="contained" type="submit">
+              Save Hair
+            </Button>
+          </Box> */}
+        </Card>
+      </form>
+      <Card>
+        <CardHeader
+          // subheader="The information can be edited"
+          title="Product List"
+          style={{
+            background: "#2e5cb8",
+            color: "white",
+            height: 10,
+          }}
+        />
+        <CustomTable rows={product} columns={columns} rowHeight={60} />
+      </Card>
+    </>
   );
 };

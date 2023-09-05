@@ -75,6 +75,30 @@ export const getProducts = async (slug, onSuccess, onFailure) => {
   }
 };
 
+export const searchHair = async(name,onSuccess,onFailure)=>{
+  try {
+    const result = await webApi.post('/search-hair',{
+      name:name
+    })
+    const hair = result?.data?.data?.hair
+    if (result.status === 200) {
+      let data = [];
+      hair.map((r, i) => {
+        data.push({
+          id: i + 1,
+          name: r.name,
+          images:r.images,
+          status: r.status,
+          product_id:r._id
+        });
+      });
+      console.log("data=>",data);
+      onSuccess(data);
+    }
+  } catch (error) {
+    onFailure(error);
+  }
+}
 export const getProductsEdit = async (product_id, onSuccess, onFailure) => {
   try {
     const result = await webApi.post("get/product/all", {
