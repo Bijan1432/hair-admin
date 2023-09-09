@@ -1,13 +1,23 @@
 import Head from "next/head";
 import Router from "next/router";
-
-import { Box, Button, Container, Grid, Link, TextField, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
 const Login = () => {
   const router = useRouter();
+  const [loading, setloading] = useState(false);
   const { continueUrl } = router.query;
   const {
     register: register1,
@@ -19,6 +29,7 @@ const Login = () => {
   });
 
   const login = (data) => {
+    setloading(true);
     console.log("create", data);
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -40,6 +51,7 @@ const Login = () => {
         console.log(result);
         if (result.success) {
           // console.log(Router)
+
           toast(result.message, { type: "success", position: "bottom-center" });
           reset1();
           let role = result?.data?.role;
@@ -50,11 +62,14 @@ const Login = () => {
           Router.push(role == "Admin" && continueUrl == "/users" ? continueUrl : "/" ?? "/").catch(
             console.error
           );
+          setloading(false);
         } else {
+          setloading(false);
           toast(result.message, { type: "warning", position: "bottom-center" });
         }
       })
       .catch((error) => {
+        setloading(false);
         console.log("error", error);
         toast("Something went wrong! Please try agian later.", {
           type: "error",
@@ -62,7 +77,24 @@ const Login = () => {
         });
       });
   };
-  return (
+  return loading ? (
+    <>
+      <Box
+        component="main"
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          minHeight: "100%",
+        }}
+      >
+        <Container maxWidth="sm" className="text-center">
+          {" "}
+          <CircularProgress />
+        </Container>
+      </Box>
+    </>
+  ) : (
     <>
       <Head>
         <title>Hair app | Login</title>
