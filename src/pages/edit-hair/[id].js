@@ -328,7 +328,7 @@ const EditHair = (props) => {
             p: 2,
           }}
         >
-          <Button color="error" variant="contained" onClick={() => router.push("/product-list")}>
+          <Button color="error" variant="contained" onClick={() => router.push("/hair-list")}>
             Cancel
           </Button>
           <Button color="primary" variant="contained" type="submit">
