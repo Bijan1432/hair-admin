@@ -1,13 +1,26 @@
 import webApi from "./webApi/webApi";
 
-export const registerUser = async (data, onSuccess, onFailure) => {
+export const registerUser = async (data,formData, onSuccess, onFailure) => {
   console.log("datadata=>", data);
   try {
-    const res = await webApi.post("/register", {
-      name: data.firstName + " " + data.lastName,
-      email: data.email,
-      password: data.password,
-    });
+    const image = await webApi.post("/uploads/imageProfile",formData)
+    let res=''
+    if(image.status === 200){
+       res = await webApi.post("/register", {
+        name: data.firstName + " " + data.lastName,
+        email: data.email,
+        password: data.password,
+        image:image?.data
+      });
+    }else{
+      res = await webApi.post("/register", {
+        name: data.firstName + " " + data.lastName,
+        email: data.email,
+        password: data.password,
+        // image:image?.data
+      });
+    }
+   
     if (res.status === 200) {
       onSuccess(res.data);
     } else {
