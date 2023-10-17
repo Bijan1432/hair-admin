@@ -18,5 +18,6 @@ const nextConfig = {
     API_TOKEN: "",
   },
 };
-
+//updated by me bijan
+SSSSSS;
 module.exports = nextConfig;
