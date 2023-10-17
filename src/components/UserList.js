@@ -208,21 +208,20 @@ export const Userlist = () => {
     },
   ];
 
-
-  const handleChangeSearch = (event)=>{
-    if(event.target.value.length >=2){
+  const handleChangeSearch = (event) => {
+    if (event.target.value.length >= 2) {
       console.log(event.target.value);
       searchUser(
         event.target.value,
-        (r)=>{
+        (r) => {
           console.log("user=>", r);
-          setUser(r)
+          setUser(r);
         },
-        (err)=>{
+        (err) => {
           console.log(err);
         }
-      )
-    }else{
+      );
+    } else {
       getUserList(
         (r) => {
           setUser(r);
@@ -236,7 +235,7 @@ export const Userlist = () => {
         }
       );
     }
-  }
+  };
   return (
     <>
       <form
@@ -244,7 +243,7 @@ export const Userlist = () => {
         noValidate
         // onSubmit={onClickSubmit}
         // {...props}
-        style={{marginBottom:15}}
+        style={{ marginBottom: 15 }}
       >
         <Card>
           <CardHeader
@@ -257,7 +256,7 @@ export const Userlist = () => {
             }}
           />
 
-          <CardContent >
+          <CardContent>
             <Grid container spacing={3}>
               <Grid item md={12} xs={12}>
                 <TextField
@@ -306,7 +305,7 @@ export const Userlist = () => {
             height: 10,
           }}
         />
-        <CustomTable rows={user} columns={columns} />
+        <CustomTable rows={user.filter((e) => e.name != "admin")} columns={columns} />
       </Card>
     </>
   );
