@@ -84,6 +84,12 @@ export const editHair = async (data, colour,imagesToRemove, onSuccess, onFailure
             filename: result.data[0].fileName,
             colour: r.varientColour,
           });
+        }else{
+          images.push({
+            url: "uploads/image/"+r.image,
+            filename:  r.image,
+            colour: r.varientColour,
+          });
         }
       })
     );

@@ -99,10 +99,12 @@ const EditHair = (props) => {
 
       setFiles([...files, event.target.files[0]]);
     } else {
+      console.log("index,event",index,event)
       updatedSections[index].varientColour = event.target.value;
       let colours = colour ? colour : [];
-      colours[index] = event.target.value;
+      colours[index]?.colour ? colours[index].colour = event.target.value :colours[index] = event.target.value;
       setcolour([...colours]);
+
     }
     setSections(updatedSections);
   };
