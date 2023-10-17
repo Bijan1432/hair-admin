@@ -19,5 +19,5 @@ const nextConfig = {
   },
 };
 //updated by me bijan
-SSSSSS;
+
 module.exports = nextConfig;
