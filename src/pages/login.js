@@ -58,7 +58,7 @@ const Login = () => {
           localStorage.setItem("token", result?.data?.token);
           localStorage.setItem("role", role);
           localStorage.setItem("name", result?.data?.name);
-
+          localStorage.setItem("id", result?.data?.userId);
           Router.push(role == "Admin" && continueUrl == "/users" ? continueUrl : "/" ?? "/").catch(
             console.error
           );
