@@ -55,13 +55,13 @@ export const deleteuser = async (id, onSuccess, onFailure) => {
   }
 };
 
-export const searchUser = async (name,onSuccess, onFailure) => {
+export const searchUser = async (name, onSuccess, onFailure) => {
   try {
-    const res = await webApi.post("/search/users",{
-      name:name
+    const res = await webApi.post("/search/users", {
+      name: name,
     });
     let data = [];
-    
+
     if (res.data.data.users.length > 0) {
       res.data.data.users.map((r, i) => {
         data.push({
@@ -82,3 +82,30 @@ export const searchUser = async (name,onSuccess, onFailure) => {
     onFailure(error);
   }
 };
+
+export const getUser = async (id, onSuccess, onFailure) => {
+  try {
+    const result = await webApi.get("/user/" + id);
+    if (result.status === 200) {
+      onSuccess(result.data.data);
+    }
+  } catch (error) {
+    onFailure(error);
+  }
+};
+
+export const updateImage = async(id,formData,onSuccess,onFailure)=>{
+  try {
+    const image = await webApi.post("/uploads/imageProfile",formData)
+
+    if(image.status ===200){
+      const res = await webApi.post(`/update-user/${id}`, {
+        image:image?.data
+      });
+      onSuccess(res.data)
+    }
+
+  } catch (error) {
+    onFailure(error)
+  }
+}
