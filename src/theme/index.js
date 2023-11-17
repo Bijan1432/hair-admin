@@ -135,13 +135,13 @@ export const theme = createTheme({
     neutral: {
       100: "#F3F4F6",
       200: "#E5E7EB",
-      300: "#000",
-      400: "#000",
+      300: "#fff",
+      400: "#fff",
       500: "#6B7280",
       600: "#4B5563",
       700: "#374151",
       800: "#1F2937",
-      900: "#fff",
+      900: "#4607ad",
     },
     action: {
       active: "#6B7280",
@@ -199,7 +199,7 @@ export const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 8,
+    borderRadius: 0,
   },
   shadows: [
     "none",

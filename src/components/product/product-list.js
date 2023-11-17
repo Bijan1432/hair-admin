@@ -128,7 +128,7 @@ export const Productlist = () => {
             // subheader="The information can be edited"
             title="User Search"
             style={{
-              background: "#2e5cb8",
+              background: "#4607ad",
               color: "white",
               height: 10,
             }}
@@ -178,7 +178,7 @@ export const Productlist = () => {
           // subheader="The information can be edited"
           title="Product List"
           style={{
-            background: "#2e5cb8",
+            background: "#4607ad",
             color: "white",
             height: 10,
           }}

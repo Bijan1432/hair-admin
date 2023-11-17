@@ -112,7 +112,7 @@ export const EnquiryList = () => {
         // subheader="The information can be edited"
         title="Enquires List"
         style={{
-          background: "#2e5cb8",
+          background: "#4607ad",
           color: "white",
           height: 10,
         }}

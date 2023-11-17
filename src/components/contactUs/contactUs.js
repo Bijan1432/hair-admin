@@ -55,7 +55,7 @@ export const ContactUs = () => {
         // subheader="The information can be edited"
         title="Contact Us Details"
         style={{
-          background: "#2e5cb8",
+          background: "#4607ad",
           color: "white",
           height: 10,
         }}

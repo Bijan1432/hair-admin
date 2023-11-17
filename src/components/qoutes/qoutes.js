@@ -127,7 +127,7 @@ export const Qouteslist = () => {
         // subheader="The information can be edited"
         title="Quotes List"
         style={{
-          background: "#2e5cb8",
+          background: "#4607ad",
           color: "white",
           height: 10,
         }}

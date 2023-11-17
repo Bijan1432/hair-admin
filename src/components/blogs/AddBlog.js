@@ -179,7 +179,7 @@ export const AddBlog = (props) => {
           // subheader="The information can be edited"
           title="Post Blog"
           style={{
-            background: "#2e5cb8",
+            background: "#4607ad",
             color: "white",
             height: 10,
           }}

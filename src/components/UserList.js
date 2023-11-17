@@ -250,7 +250,7 @@ export const Userlist = () => {
             // subheader="The information can be edited"
             title="User Search"
             style={{
-              background: "#2e5cb8",
+              background: "#4607ad",
               color: "white",
               height: 10,
             }}
@@ -300,7 +300,7 @@ export const Userlist = () => {
           // subheader="The information can be edited"
           title="User List"
           style={{
-            background: "#2e5cb8",
+            background: "#4607ad",
             color: "white",
             height: 10,
           }}

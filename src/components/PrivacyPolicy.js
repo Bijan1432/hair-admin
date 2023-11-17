@@ -103,7 +103,7 @@ export const PrivacyPolicy = (props) => {
           // subheader="The information can be edited"
           title="Post Privacy Policy"
           style={{
-            background: "#2e5cb8",
+            background: "#4607ad",
             color: "white",
             height: 10,
           }}

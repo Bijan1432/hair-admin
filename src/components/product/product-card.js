@@ -224,7 +224,7 @@ export const Hair = (props) => {
             // subheader="The information can be edited"
             title="Add Hair"
             style={{
-              background: "#2e5cb8",
+              background: "#4607ad",
               color: "white",
               height: 10,
             }}

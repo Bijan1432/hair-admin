@@ -37,7 +37,7 @@ const items = [
   },
   {
     href: "/users",
-    icon: <PrecisionManufacturingIcon fontSize="small" />,
+    icon: <RssFeedIcon fontSize="small" />,
     title: "Users",
   },
   {
@@ -110,7 +110,7 @@ export const DashboardSidebar = (props) => {
             <Box
               sx={{
                 alignItems: "center",
-                backgroundColor: "rgba(255, 255, 255, 0.04)",
+                backgroundColor: "#282343",
                 cursor: "pointer",
                 display: "flex",
                 justifyContent: "space-between",

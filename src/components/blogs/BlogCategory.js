@@ -206,7 +206,7 @@ export const BlogCategoryDetails = (props) => {
             // subheader="The information can be edited"
             title="Add Category"
             style={{
-              background: "#2e5cb8",
+              background: "#4607ad",
               color: "white",
               height: 10,
             }}
@@ -368,7 +368,7 @@ export const BlogCategoryDetails = (props) => {
           // subheader="The information can be edited"
           title="All Category"
           style={{
-            background: "#2e5cb8",
+            background: "#4607ad",
             color: "white",
             height: 10,
           }}
