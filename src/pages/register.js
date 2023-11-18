@@ -18,7 +18,9 @@ import { registerUser } from "../service/login";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 const Register = () => {
-  const [files,setFiles] = useState([])
+  const [files, setFiles] = useState([]);
+  const [files2, setFiles2] = useState([]);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -38,10 +40,15 @@ const Register = () => {
       console.log(files, "reg page");
       // e.preventDefault()
       const formData = new FormData();
+      const formData2 = new FormData();
+
       formData.append("imagesProfile", files[0]);
+      formData2.append("hairImages", files2[0]);
+
       registerUser(
         e,
         formData,
+        formData2,
         (r) => {
           toast("Registererd SuccessFull", { type: "success", position: "bottom-center" });
         },
@@ -49,12 +56,17 @@ const Register = () => {
           console.log(err);
         }
       );
-      Router.push("/").catch(console.error);
+      // Router.push("/").catch(console.error);
     },
   });
-const handleChange2 =(event)=>{
-  setFiles([...files, event.target.files[0]]);
-}
+  const handleChange2 = (event) => {
+    if (event.target.name === "image") {
+      setFiles([...files, event.target.files[0]]);
+    } else {
+      setFiles2([...files2, event.target.files[0]]);
+
+    }
+  };
   return (
     <>
       <Head>
@@ -75,7 +87,7 @@ const handleChange2 =(event)=>{
               Dashboard
             </Button>
           </NextLink>
-          <form onSubmit={formik.handleSubmit}>
+          <form onSubmit={formik.handleSubmit} enctype="multipart/form-data">
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
                 Create a new account
@@ -134,6 +146,7 @@ const handleChange2 =(event)=>{
               value={formik.values.password}
               variant="outlined"
             />
+            <Typography>Profile Image</Typography>
             <TextField
               fullWidth
               // label="Image"
@@ -144,11 +157,18 @@ const handleChange2 =(event)=>{
                 multiple: true,
                 accept: ".jpg,.jpeg,.png",
               }}
-              // required
-              // select
-              // SelectProps={{ native: true }}
-              // value={values.sin}
-              // variant="outlined"
+            />
+            <Typography>Hair Image</Typography>
+            <TextField
+              fullWidth
+              // label="Image"
+              name="hairImage"
+              type="file"
+              onChange={handleChange2}
+              inputProps={{
+                multiple: true,
+                accept: ".jpg,.jpeg,.png",
+              }}
             />
             <Box
               sx={{
