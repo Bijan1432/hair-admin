@@ -40,15 +40,14 @@ const Register = () => {
       console.log(files, "reg page");
       // e.preventDefault()
       const formData = new FormData();
-      const formData2 = new FormData();
+      // const formData2 = new FormData();
 
       formData.append("imagesProfile", files[0]);
-      formData2.append("hairImages", files2[0]);
+      // formData2.append("hairImages", files2[0]);
 
       registerUser(
         e,
         formData,
-        formData2,
         (r) => {
           toast("Registererd SuccessFull", { type: "success", position: "bottom-center" });
         },
@@ -158,7 +157,7 @@ const Register = () => {
                 accept: ".jpg,.jpeg,.png",
               }}
             />
-            <Typography>Hair Image</Typography>
+            {/* <Typography>Hair Image</Typography>
             <TextField
               fullWidth
               // label="Image"
@@ -169,7 +168,7 @@ const Register = () => {
                 multiple: true,
                 accept: ".jpg,.jpeg,.png",
               }}
-            />
+            /> */}
             <Box
               sx={{
                 alignItems: "center",
