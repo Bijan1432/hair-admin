@@ -10,7 +10,9 @@ import {
   TextField,
   Tooltip,
   Popover,
+  Modal,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -26,6 +28,21 @@ export const Userlist = () => {
   const router = useRouter();
   const [user, setUser] = useState([]);
   const [values, setValues] = useState([]);
+  //modal
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+  const [openMod, setOpenMod] = useState(false);
+  const handleOpenMod = () => setOpenMod(true);
+  const handleCloseMod = () => setOpenMod(false);
 
   useEffect(() => {
     getUserList(
@@ -191,14 +208,33 @@ export const Userlist = () => {
                   >
                     Inactive
                   </Button>
-                  <Button
-                    onClick={(e) => {
-                      setDatadel(userch);
-                      handleClose();
-                    }}
+                  <Button onClick={handleOpenMod}>Delete</Button>
+                  <Modal
+                    open={openMod}
+                    onClose={handleCloseMod}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
                   >
-                    Delete
-                  </Button>
+                    <Box sx={style}>
+                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Delete The User
+                      </Typography>
+                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Do You want to delete this user ?
+                      </Typography>
+                      <Button
+                        variant="outlined"
+                        startIcon={<DeleteIcon />}
+                        className="mt-3"
+                        onClick={(e) => {
+                          setDatadel(userch);
+                          handleClose();
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
+                  </Modal>
                 </Typography>
               </Popover>
             </Grid>

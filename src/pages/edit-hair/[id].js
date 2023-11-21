@@ -18,6 +18,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { makeStyles } from "@mui/styles";
 import { useRouter } from "next/router";
 import { DashboardLayout } from "../../components/dashboard-layout";
+import Image from "next/image";
 
 const useStyles = makeStyles({
   label: {
@@ -282,7 +283,7 @@ const EditHair = (props) => {
                       key={section.id}
                     />
                   </Grid>
-                  <Grid item md={6} xs={12}>
+                  <Grid item md={4} xs={12}>
                     <TextField
                       fullWidth
                       // label="Image"
@@ -300,6 +301,20 @@ const EditHair = (props) => {
                       // variant="outlined"
                       key={section.id}
                       helperText={typeof section?.image === "object" ? "" : section?.image}
+                    />
+                  </Grid>
+                  <Grid item md={2} xs={12}>
+                    <Image
+                      src={
+                        typeof section?.image === "object"
+                          ? ""
+                          : "https://crowningglorylm.com/hair-backend/uploads/image/" +
+                            section?.image
+                      }
+                      layout="responsive"
+                      className="img-fluid"
+                      height="200"
+                      width="200"
                     />
                   </Grid>
                   <Grid item md={2} xs={12}>
