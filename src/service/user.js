@@ -15,6 +15,7 @@ export const getUserList = async (onSuccess, onFailure) => {
           dob: r.dob,
           gender: r.gender,
           status: r.status,
+          hairImage:r.hairImage
         });
       });
       onSuccess(data);

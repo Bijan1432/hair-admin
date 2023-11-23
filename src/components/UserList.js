@@ -23,6 +23,7 @@ import { ToastContainer, toast } from "react-toastify";
 //icone
 import EditIcon from "@mui/icons-material/Edit";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 export const Userlist = () => {
   const router = useRouter();
@@ -41,8 +42,14 @@ export const Userlist = () => {
     p: 4,
   };
   const [openMod, setOpenMod] = useState(false);
+  const [openMod2, setOpenMod2] = useState(false);
+
   const handleOpenMod = () => setOpenMod(true);
   const handleCloseMod = () => setOpenMod(false);
+  const handleOpenMod2 = () => {
+    setOpenMod2(true);
+  };
+  const handleCloseMod2 = () => setOpenMod2(false);
 
   useEffect(() => {
     getUserList(
@@ -191,6 +198,7 @@ export const Userlist = () => {
                 }}
               >
                 <Typography sx={{ p: 2 }}>
+                  <Button onClick={handleOpenMod2}>Preview</Button>
                   <Button
                     onClick={(e) => {
                       // console.log(userch);
@@ -233,6 +241,31 @@ export const Userlist = () => {
                       >
                         Delete
                       </Button>
+                    </Box>
+                  </Modal>
+                  <Modal
+                    open={openMod2}
+                    onClose={handleCloseMod2}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={style}>
+                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Hair Preview
+                      </Typography>
+                      <Typography id="modal-modal-description">
+                        {userch?.hairImage.length > 0
+                          ? userch?.hairImage.map((r, i) => (
+                              <Image
+                                id={i}
+                                src={process.env.API_END_POINT + "/" + r?.filePath}
+                                layout="fill"
+                              />
+                            ))
+                          : "No Image For Preview"}
+
+                        {console.log("row=>>", userch)}
+                      </Typography>
                     </Box>
                   </Modal>
                 </Typography>
