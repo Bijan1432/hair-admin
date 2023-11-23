@@ -255,9 +255,10 @@ export const Userlist = () => {
                       </Typography>
                       <Typography id="modal-modal-description">
                         {userch?.hairImage.length > 0
-                          ? userch?.hairImage.map((r, i) => (
+                          ? userch?.hairImage.map((r, key) => (
                               <Image
-                                id={i}
+                                key={key}
+                                id={key}
                                 src={"https://crowningglorylm.com/hair-backend/" + r?.filePath}
                                 layout="fill"
                               />
