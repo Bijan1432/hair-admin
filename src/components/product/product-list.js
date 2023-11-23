@@ -16,6 +16,7 @@ import { getProducts, searchHair } from "../../service/product";
 import { ToastContainer, toast } from "react-toastify";
 import EditIcon from "@mui/icons-material/Edit";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 export const Productlist = () => {
   const router = useRouter();
@@ -28,15 +29,27 @@ export const Productlist = () => {
     {
       field: "images",
       headerName: "Image",
-      width: 400,
+      width: 200,
+      height: 200,
       renderCell: ({ row }) => (
         <>
-          {row?.images?.map((r, i) => (
-            <>
-              <span>{r.filename}</span>
-              <br />
-            </>
-          ))}
+          {row?.images?.map((r, i) =>
+            i < 3 ? (
+              <>
+                <span>
+                  <Image
+                    src={"https://crowningglorylm.com/hair-backend/uploads/image/" + r.filename}
+                    className="img-fluid"
+                    height="120"
+                    width="100"
+                  />
+                </span>
+                <br />
+              </>
+            ) : (
+              <></>
+            )
+          )}
         </>
       ),
     },
@@ -183,7 +196,7 @@ export const Productlist = () => {
             height: 10,
           }}
         />
-        <CustomTable rows={product} columns={columns} rowHeight={60} />
+        <CustomTable rows={product} columns={columns} rowHeight={120} />
       </Card>
     </>
   );

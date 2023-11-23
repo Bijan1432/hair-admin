@@ -258,7 +258,7 @@ export const Userlist = () => {
                           ? userch?.hairImage.map((r, i) => (
                               <Image
                                 id={i}
-                                src={process.env.API_END_POINT + "/" + r?.filePath}
+                                src={"https://crowningglorylm.com/hair-backend/" + r?.filePath}
                                 layout="fill"
                               />
                             ))
