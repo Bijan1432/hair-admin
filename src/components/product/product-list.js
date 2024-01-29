@@ -24,8 +24,11 @@ export const Productlist = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Product Name", width: 200 },
-    { field: "status", headerName: "Status", width: 130 },
+    { field: "name", headerName: "Product Name", width: 170 },
+    { field: "status", headerName: "Status", width: 80 },
+    { field: "type", headerName: "Type", width: 130 },
+    { field: "mode", headerName: "Mode", width: 130 },
+    { field: "bangs", headerName: "Bangs", width: 130 },
     {
       field: "images",
       headerName: "Image",
@@ -56,7 +59,7 @@ export const Productlist = () => {
     {
       field: "action",
       headerName: "Action",
-      width: 160,
+      width: 100,
       renderCell: ({ row }) => (
         <>
           <Grid container spacing={3}>

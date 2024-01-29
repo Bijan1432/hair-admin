@@ -67,6 +67,9 @@ export const Hair = (props) => {
   const [error, setError] = useState({
     hairName: false,
     status: false,
+    bangs: false,
+    mode: false,
+    status: false,
     data: false,
   });
   const [color, setColor] = useState("");
@@ -137,16 +140,19 @@ export const Hair = (props) => {
   const onClickSubmit = (event) => {
     event.preventDefault();
     console.log("files", files, colour, sections);
-    const { hairName, status } = values;
+    const { hairName, status, bangs, mode, type } = values;
 
     const formData = new FormData();
     for (let i = 0; i < files.length; i++) {
       formData.append("images", files[i]);
     }
-    if (!hairName || !status) {
+    if (!hairName || !status || !type || !bangs || !mode) {
       setError({
         hairName: !hairName,
         status: !status,
+        type: !type,
+        bangs: !bangs,
+        mode: !mode,
       });
       window.scrollTo(0, 0);
     } else {
@@ -249,6 +255,67 @@ export const Hair = (props) => {
                   ""
                 )}
               </Grid>
+              <Grid item md={4} xs={12}>
+                <TextField
+                  fullWidth
+                  label="Type"
+                  name="type"
+                  onChange={handleChange}
+                  required
+                  select
+                  SelectProps={{ native: true }}
+                  value={values.type}
+                  variant="outlined"
+                  InputLabelProps={{ classes: { outlined: classes.label } }}
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Select Type
+                  </option>
+
+                  <option value="pro">Pro</option>
+                  <option value="normal">Normal</option>
+                </TextField>
+                {error.type ? (
+                  <span style={{ color: "red", fontSize: "10pt" }}>*Type is required</span>
+                ) : (
+                  ""
+                )}
+              </Grid>
+              <Grid item md={4} xs={12}>
+                <TextField
+                  fullWidth
+                  // helperText="Hair Name"
+                  label="Mode"
+                  name="mode"
+                  onChange={handleChange}
+                  required
+                  value={values.mode}
+                  variant="outlined"
+                />
+                {error.mode ? (
+                  <span style={{ color: "red", fontSize: "10pt" }}>*Hair mode is required</span>
+                ) : (
+                  ""
+                )}
+              </Grid>
+              <Grid item md={4} xs={12}>
+                <TextField
+                  fullWidth
+                  // helperText="Hair Name"
+                  label="Bangs"
+                  name="bangs"
+                  onChange={handleChange}
+                  required
+                  value={values.bangs}
+                  variant="outlined"
+                />
+                {error.bangs ? (
+                  <span style={{ color: "red", fontSize: "10pt" }}>*Hair bangs is required</span>
+                ) : (
+                  ""
+                )}
+              </Grid>
 
               <Grid item md={4} xs={12}>
                 <TextField
@@ -304,7 +371,7 @@ export const Hair = (props) => {
                     <Grid item md={6} xs={12}>
                       <TextField
                         fullWidth
-                        // label="Image"
+                        label="Image (Max size -  1MB)"
                         name="image"
                         type="file"
                         onChange={(event) => handleChange2(index, event)}
@@ -316,7 +383,8 @@ export const Hair = (props) => {
                         // select
                         // SelectProps={{ native: true }}
                         // value={values.sin}
-                        // variant="outlined"
+                        variant="outlined"
+                        focused
                       />
                     </Grid>
                     <Grid item md={2} xs={12}>

@@ -22,6 +22,9 @@ export const postHair = async (image, colour, data, onSuccess, onFailure) => {
         name: data.hairName,
         images: images,
         status: data.status,
+        type: data.type,
+        bangs: data.bangs,
+        mode: data.mode,
       });
       if (res.status === 200) {
         onSuccess(res.data);
@@ -58,6 +61,9 @@ export const getHairAll = async (onSuccess, onFailure) => {
           id: i + 1,
           name: r.name,
           status: r.status,
+          type: r.type,
+          mode: r.mode,
+          bangs: r.bangs,
           images: r.images,
         });
       });
@@ -70,7 +76,7 @@ export const getHairAll = async (onSuccess, onFailure) => {
   }
 };
 //edit Hair
-export const editHair = async (data, colour,imagesToRemove, onSuccess, onFailure) => {
+export const editHair = async (data, colour, imagesToRemove, onSuccess, onFailure) => {
   try {
     // console.log("typeOf==>", colour);
     const images = [];
@@ -84,10 +90,10 @@ export const editHair = async (data, colour,imagesToRemove, onSuccess, onFailure
             filename: result.data[0].fileName,
             colour: r.varientColour,
           });
-        }else{
+        } else {
           images.push({
-            url: "uploads/image/"+r.image,
-            filename:  r.image,
+            url: "uploads/image/" + r.image,
+            filename: r.image,
             colour: r.varientColour,
           });
         }
@@ -118,7 +124,10 @@ export const editHair = async (data, colour,imagesToRemove, onSuccess, onFailure
       name: data.hairName,
       images: images,
       status: data.status,
-      imagesToRemove:imagesToRemove,
+      type: data.type,
+      bangs: data.bangs,
+      mode: data.mode,
+      imagesToRemove: imagesToRemove,
     });
     console.log("reched2", res);
 

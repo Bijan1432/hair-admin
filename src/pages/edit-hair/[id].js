@@ -40,6 +40,9 @@ const EditHair = (props) => {
   const [error, setError] = useState({
     hairName: false,
     status: false,
+    type: false,
+    bangs: false,
+    mode: false,
     data: false,
   });
   const Richtext = useMemo(() => dynamic(() => import("react-quill"), { ssr: false }), []);
@@ -48,6 +51,9 @@ const EditHair = (props) => {
     hairName: "",
     status: "",
     images: "",
+    type: "",
+    bangs: "",
+    mode: "",
   });
   const [hairCat, setHairCat] = useState([]);
   const [imageUp, setImageUp] = useState([]);
@@ -64,6 +70,9 @@ const EditHair = (props) => {
         setValues({
           hairName: r.name,
           status: r.status,
+          type: r.type,
+          bangs: r.bangs,
+          mode: r.mode,
           images: r.images,
           id: id,
         });
@@ -231,7 +240,67 @@ const EditHair = (props) => {
                 ""
               )}
             </Grid>
+            <Grid item md={4} xs={12}>
+              <TextField
+                fullWidth
+                label="Type"
+                name="type"
+                onChange={handleChange}
+                required
+                select
+                SelectProps={{ native: true }}
+                value={values.type}
+                variant="outlined"
+                InputLabelProps={{ classes: { outlined: classes.label } }}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select Type
+                </option>
 
+                <option value="pro">Pro</option>
+                <option value="normal">Normal</option>
+              </TextField>
+              {error.type ? (
+                <span style={{ color: "red", fontSize: "10pt" }}>*type is required</span>
+              ) : (
+                ""
+              )}
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <TextField
+                fullWidth
+                // helperText="Hair Name"
+                label="Mode"
+                name="mode"
+                onChange={handleChange}
+                required
+                value={values.mode}
+                variant="outlined"
+              />
+              {error.mode ? (
+                <span style={{ color: "red", fontSize: "10pt" }}>*Hair mode is required</span>
+              ) : (
+                ""
+              )}
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <TextField
+                fullWidth
+                // helperText="Hair Name"
+                label="Bangs"
+                name="bangs"
+                onChange={handleChange}
+                required
+                value={values.bangs}
+                variant="outlined"
+              />
+              {error.bangs ? (
+                <span style={{ color: "red", fontSize: "10pt" }}>*Hair bangs is required</span>
+              ) : (
+                ""
+              )}
+            </Grid>
             <Grid item md={4} xs={12}>
               <TextField
                 fullWidth
@@ -283,6 +352,7 @@ const EditHair = (props) => {
                       key={section.id}
                     />
                   </Grid>
+
                   <Grid item md={4} xs={12}>
                     <TextField
                       fullWidth
